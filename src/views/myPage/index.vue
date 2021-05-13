@@ -1,5 +1,8 @@
 <template>
-  <div>123</div>
+  <div>
+    <el-card>
+    </el-card>
+  </div>
 </template>
 
 <script>

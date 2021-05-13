@@ -5,6 +5,10 @@
         <side-bar></side-bar>
       </el-aside>
       <el-container>
+        <el-header>
+          <el-button type="text" style="float: right; margin-top: 10px" @click="singout">退出登录</el-button>
+          <bread-crumb></bread-crumb>
+        </el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -15,9 +19,16 @@
 
 <script>
 import sideBar from './sidebar'
+import breadCrumb from './breadCrumb'
 export default {
   components: {
-    sideBar
+    sideBar,
+    breadCrumb
+  },
+  methods: {
+    singout() {
+      this.$router.push('/login')
+    }
   }
 };
 </script>

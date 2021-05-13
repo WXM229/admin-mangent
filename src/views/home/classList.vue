@@ -1,6 +1,8 @@
 <template>
   <div>
-    班级列表
+   <el-card>
+     123
+   </el-card>
   </div>
 </template>
 

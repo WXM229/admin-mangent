@@ -5,10 +5,6 @@
         {{item.meta.title}}
       </el-breadcrumb-item>
     </el-breadcrumb>
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
@@ -35,7 +31,6 @@ export default {
   height: 100%;
 }
 .el-breadcrumb {
-  line-height: 2;
-  margin-bottom: 10px;
+  line-height: 4;
 }
 </style>
