@@ -1,11 +1,14 @@
 <template>
   <div class="breadCrumb">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+      <el-breadcrumb-item v-for="(item, index) in breadCrumb_list" :key="index"  :to="item.path">
+        {{item.meta.title}}
+      </el-breadcrumb-item>
     </el-breadcrumb>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
@@ -21,7 +24,7 @@ export default {
   },
   watch: {
     $route(to) {
-      console.log(to, '70')
+      this.breadCrumb_list = to.matched
     }
   }
 };
@@ -32,6 +35,7 @@ export default {
   height: 100%;
 }
 .el-breadcrumb {
-  line-height: 4;
+  line-height: 2;
+  margin-bottom: 10px;
 }
 </style>

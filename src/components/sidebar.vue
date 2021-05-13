@@ -8,22 +8,34 @@
       background-color="#29394d"
       text-color="#fff"
       active-text-color="#409EFF"
-      router
       >
-      <!-- <el-submenu index="1">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
+      <el-submenu
+        v-for="(item, index) in routerList"
+        :key="index"
+        :index="item.url"
+      >
+        <template>
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>{{ item.name }}</span>
+          </template>
+          <router-link
+            style="text-decoration: none"
+            v-for="subItem in item.children"
+            :to="{ path: subItem.url }"
+            :key="subItem.url"
+          >
+            <el-menu-item :index="subItem.url">
+              {{ subItem.name }}
+            </el-menu-item>
+          </router-link>
         </template>
-        <el-menu-item-group>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu> -->
-      <el-menu-item v-for="(item, index) in routerList" :key="index" :index="item.url">
+      </el-submenu>
+
+      <!-- <el-menu-item v-for="(item, index) in routerList" :key="index" :index="item.url">
         <i class="el-icon-menu"></i>
         <span slot="title">{{item.name}}</span>
-      </el-menu-item>
+      </el-menu-item> -->
     </el-menu>
   </div>
 </template>
@@ -38,6 +50,7 @@ export default {
   },
   created() {
     this.routerList = routerList.router_list;
+    console.log(this.routerList, 'list')
   },
   methods: {
     handleOpen(key, keyPath) {

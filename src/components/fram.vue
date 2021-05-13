@@ -5,10 +5,6 @@
         <side-bar></side-bar>
       </el-aside>
       <el-container>
-        <el-header>
-          <breadCrumb />
-          Header
-        </el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -19,11 +15,9 @@
 
 <script>
 import sideBar from './sidebar'
-import breadCrumb from './breadCrumb'
 export default {
   components: {
-    sideBar,
-    breadCrumb
+    sideBar
   }
 };
 </script>
@@ -42,11 +36,10 @@ html,body,#app,.el-container {
   background-color: #ffffff;
   color: #333;
   text-align: center;
-  line-height: 60px;
+  line-height: 40px;
 }
 
 .el-aside {
-  /* background-color: #29394d; */
   color: #333;
   text-align: center;
   line-height: 200px;
