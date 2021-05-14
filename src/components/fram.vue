@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     singout() {
+      localStorage.removeItem('user')
       this.$router.push('/login')
     }
   }

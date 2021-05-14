@@ -8,7 +8,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/home/index'
+    // redirect: '/home/index'
+    redirect: '/login'
   },
   {
     path: '/login',
@@ -68,6 +69,12 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, form, next )=>{
+  let isLogin = Boolean(localStorage.getItem('user'))
+  if (to.name !== 'login' && !isLogin) next({ name: 'login' })
+  else next()
 })
 
 export default router
