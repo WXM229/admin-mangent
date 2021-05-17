@@ -61,7 +61,7 @@ html,body,#app,.el-container {
   background-color: #f7f7f7;
   color: #333;
   text-align: center;
-  line-height: 160px;
+  /* line-height: 160px; */
 }
 
 body > .el-container {
