@@ -15,7 +15,7 @@
           <el-button @click="handleClick(scope.row)" type="text" size="small"
             >授权</el-button
           >
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button type="text" size="small" @click="handleEditChange(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -40,10 +40,19 @@
         <el-button type="primary" @click="handkeSure">确 定</el-button>
       </span>
     </el-dialog>
+    <el-drawer
+      :visible.sync="drawer"
+      :direction="direction"
+      :before-close="handleDrawClose">
+      <span>
+        <IndexInfo :userInfo="editRow"></IndexInfo>
+      </span>
+</el-drawer>
   </div>
 </template>
 
 <script>
+import IndexInfo from './indexInfo'
 export default {
   data() {
     return {
@@ -122,7 +131,10 @@ export default {
         children: 'children',
         label: 'label'
       },
-      checkList: []
+      checkList: [],
+      drawer: false,
+      direction: 'rtl',
+      editRow: {}
     }
   },
   methods: {
@@ -141,7 +153,17 @@ export default {
       console.log(checkedKeys, 'checkedKeys')
       this.checkList = checkedKeys.checkedKeys
       console.log(this.checkList, '123')
+    },
+    handleEditChange(row) {
+      this.editRow = row
+      this.drawer = true
+    },
+    handleDrawClose() {
+      this.drawer = false
     }
+  },
+  components: {
+    IndexInfo
   }
 };
 </script>
