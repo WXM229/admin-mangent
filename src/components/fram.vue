@@ -60,7 +60,7 @@ html,body,#app,.el-container {
 .el-main {
   background-color: #f7f7f7;
   color: #333;
-  text-align: center;
+  /* text-align: center; */
   /* line-height: 160px; */
 }
 

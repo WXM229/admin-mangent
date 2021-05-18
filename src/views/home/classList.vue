@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page111">
     <div class="content">
       <div class="content_item">
         <a class="top-content" href="#">xxx</a>
@@ -95,7 +95,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .content {
   width: 100%;
   display: flex;
