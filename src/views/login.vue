@@ -31,7 +31,7 @@ export default {
           { min: 1, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
         password: [
-          {required: true, message: '请输入密码', trigger: 'blur' },  
+          {required: true, message: '请输入密码', trigger: 'blur' },
           { min: 1, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ]
       }
@@ -58,15 +58,19 @@ export default {
 </script >
 
 
-<style>
-html, body {
+<style scoped>
+.page {
+ width: 100%;
+  padding: 1px;
+  background-color: #2b384c;
+}
+.content {
   width: 100%;
   background-color: #2b384c;
-  }
- .page {
-   color: #ffffff;
-   height: 100%;
-   margin: 150px auto;
- }
+  color: #ffffff;
+  height: 100%;
+  margin: 150px auto;
+  text-align: center;
+}
 
 </style>
