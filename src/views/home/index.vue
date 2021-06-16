@@ -28,10 +28,9 @@
       <span>
         <el-tree
           :data="data"
-          show-checkbox
           node-key="id"
           :props="defaultProps"
-          @check="handleCheck"
+          @node-click="handleNodeClick"
         >
         </el-tree>
       </span>
@@ -134,7 +133,13 @@ export default {
       checkList: [],
       drawer: false,
       direction: 'rtl',
-      editRow: {}
+      editRow: {},
+      queryParams: {
+
+      },
+      value: '',
+      tempChildArr: [],
+      ids: ''
     }
   },
   methods: {
@@ -160,13 +165,47 @@ export default {
     },
     handleDrawClose() {
       this.drawer = false
-    }
+    },
+    getTableList(systemid) {
+      console.log(systemid, 'id')
+      this.queryParams.systemid = systemid
+    },
+
+    handleNodeClick (data) {
+      this.tempChildArr = []
+      if (Object.prototype.hasOwnProperty.call(data,'children')) {
+        this.getAllChild(data)
+      } else {
+        this.tempChildArr.push(data.id)
+      }
+      this.ids = this.tempChildArr.join(',')
+      console.log(this.ids , 'ids')
+    },
+
+    getAllChild (obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, 'children')) {
+        for (const item of obj.children) {
+          if (Object.prototype.hasOwnProperty.call(item, 'children')) {
+            this.tempChildArr.push(item.id)
+            this.getAllChild(item)
+          } else {
+            this.tempChildArr.push(item.id)
+          }
+        }
+        this.getAllChild(obj.children)
+      } else {
+        return null
+      }
+    },
   },
   components: {
     IndexInfo
+  },
+  created() {
+    this.getTableList(this.$router.query.systemid)
   }
 };
 </script>
 
-<style>
+<style lang="less" scoped>
 </style>
