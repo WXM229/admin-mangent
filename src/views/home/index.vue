@@ -180,7 +180,6 @@ export default {
         this.tempChildArr.push(data.id)
       }
       this.ids = this.tempChildArr.join(',')
-      console.log(this.ids , 'ids')
     },
 
     getAllChild (obj) {
