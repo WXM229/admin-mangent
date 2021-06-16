@@ -50,27 +50,23 @@ export default {
          this.$message.error('请先输入账号密码在进行登录哦~')
        }
     }
-  },
-  created() {
-    console.log(1111)
   }
 }
 </script >
 
-
-<style scoped>
+<style lang="less" scoped>
 .page {
- width: 100%;
-  padding: 1px;
-  background-color: #2b384c;
-}
-.content {
   width: 100%;
+  padding-top: 1px;
   background-color: #2b384c;
-  color: #ffffff;
-  height: 100%;
-  margin: 150px auto;
-  text-align: center;
+  height: 850px;
+  .content {
+    width: 100%;
+    background-color: #2b384c;
+    color: #ffffff;
+    height: 100%;
+    margin: 150px auto;
+    text-align: center;
+  }
 }
-
 </style>
