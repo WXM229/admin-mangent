@@ -172,6 +172,7 @@ export default {
     },
 
     handleNodeClick (data) {
+      console.log(data, 'data')
       this.tempChildArr = []
       if (Object.prototype.hasOwnProperty.call(data,'children')) {
         this.getAllChild(data)
