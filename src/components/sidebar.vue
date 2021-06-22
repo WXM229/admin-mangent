@@ -50,7 +50,6 @@ export default {
   },
   created() {
     this.routerList = routerList.router_list;
-    console.log(this.routerList, 'list')
   },
   methods: {
     handleOpen(key, keyPath) {
