@@ -1,16 +1,16 @@
 <template>
   <div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="date" label="日期" width="150">
+      <el-table-column fixed prop="date" label="日期">
       </el-table-column>
-      <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
-      <el-table-column prop="province" label="省份" width="120">
+      <el-table-column prop="name" label="姓名"> </el-table-column>
+      <el-table-column prop="province" label="省份">
       </el-table-column>
-      <el-table-column prop="city" label="市区" width="120"> </el-table-column>
-      <el-table-column prop="address" label="地址" width="300">
+      <el-table-column prop="city" label="市区"> </el-table-column>
+      <el-table-column prop="address" label="地址">
       </el-table-column>
-      <el-table-column prop="zip" label="邮编" width="120"> </el-table-column>
-      <el-table-column fixed="right" label="操作" width="100">
+      <el-table-column prop="zip" label="邮编"> </el-table-column>
+      <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small"
             >授权</el-button
@@ -166,13 +166,7 @@ export default {
     handleDrawClose() {
       this.drawer = false
     },
-    getTableList(systemid) {
-      console.log(systemid, 'id')
-      this.queryParams.systemid = systemid
-    },
-
     handleNodeClick (data) {
-      console.log(data, 'data')
       this.tempChildArr = []
       if (Object.prototype.hasOwnProperty.call(data,'children')) {
         this.getAllChild(data)
@@ -181,7 +175,6 @@ export default {
       }
       this.ids = this.tempChildArr.join(',')
     },
-
     getAllChild (obj) {
       if (Object.prototype.hasOwnProperty.call(obj, 'children')) {
         for (const item of obj.children) {
@@ -200,9 +193,6 @@ export default {
   },
   components: {
     IndexInfo
-  },
-  created() {
-    this.getTableList(this.$router.query.systemid)
   }
 };
 </script>
