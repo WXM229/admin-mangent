@@ -39,16 +39,16 @@ export default {
   },
   methods: {
     singIn() {
-       if (this.form.num && this.form.password) {
-         this.$message({
-           message: '登录成功',
-           type: 'success'
-         })
-         localStorage.setItem('user', this.form.num)
-         this.$router.push('/home/index')
-       } else {
+      if (this.form.num && this.form.password) {
+        if (this.form.num === 'admin123' && this.form.password === 'admin123') {
+          localStorage.setItem('user', this.form.num)
+          this.$router.push('/home/index')
+        } else {
+          this.$message.error('账号或密码不正确~')
+        }
+      } else {
          this.$message.error('请先输入账号密码在进行登录哦~')
-       }
+      }
     }
   }
 }
