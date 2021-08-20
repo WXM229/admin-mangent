@@ -8,6 +8,7 @@
       background-color="#29394d"
       text-color="#fff"
       active-text-color="#409EFF"
+      :collapse="collapse"
       >
       <template v-for="(item, index) in routerList">
         <el-submenu
@@ -17,7 +18,7 @@
         >
           <template>
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i :class="item.icon"></i>
               <span>{{ item.name }}</span>
             </template>
             <router-link
@@ -38,7 +39,7 @@
             :to="{ path: item.url }"
             :key="index">
           <el-menu-item  :index="item.url">
-            <i class="el-icon-location"></i>
+            <i :class="item.icon"></i>
             <span slot="title">{{ item.name }}</span>
           </el-menu-item>
         </router-link>
@@ -56,6 +57,7 @@ export default {
       routerList: [],
     }
   },
+  props: ['collapse'],
   created() {
     this.routerList = routerList.router_list;
   },

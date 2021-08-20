@@ -3,6 +3,7 @@ export default {
     {
       name: '首页',
       url: '/home',
+      icon: 'el-icon-location',
       children: [
         {
           name: '课程列表',
@@ -17,6 +18,7 @@ export default {
     {
       name: '数据管理',
       url: '/myPage',
+      icon: 'el-icon-setting',
       children: [
         {
           name: '数据统计',
@@ -26,7 +28,8 @@ export default {
     },
     {
       name: '转介绍用户',
-      url: '/transfer'
+      url: '/transfer',
+      icon: 'el-icon-user',
     }
   ]
 }
