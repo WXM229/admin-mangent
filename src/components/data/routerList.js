@@ -23,6 +23,10 @@ export default {
           url: '/myPage/index'
         },
       ]
+    },
+    {
+      name: '转介绍用户',
+      url: '/transfer'
     }
   ]
 }

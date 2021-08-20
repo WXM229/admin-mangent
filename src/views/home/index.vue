@@ -39,19 +39,10 @@
         <el-button type="primary" @click="handkeSure">确 定</el-button>
       </span>
     </el-dialog>
-    <el-drawer
-      :visible.sync="drawer"
-      :direction="direction"
-      :before-close="handleDrawClose">
-      <span>
-        <IndexInfo :userInfo="editRow"></IndexInfo>
-      </span>
-</el-drawer>
   </div>
 </template>
 
 <script>
-import IndexInfo from './indexInfo'
 import { TABLE_LIST } from '../../store/table'
 export default {
   data() {
@@ -157,9 +148,6 @@ export default {
         return null
       }
     },
-  },
-  components: {
-    IndexInfo
   },
   created() {
     let tableData =  [
