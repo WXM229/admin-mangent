@@ -1,11 +1,14 @@
 <template>
   <div class="aside">
     <el-container style="height: 100%;">
-      <el-aside width="250px">
-        <side-bar></side-bar>
+      <el-aside :width= "collapse ? '60px' : '250px'">
+        <side-bar :collapse="collapse"></side-bar>
       </el-aside>
       <el-container>
         <el-header>
+          <div class="collapse-btn" @click="handleSidebar">
+            <i class="el-icon-menu"></i>
+          </div>
           <el-button type="text" style="float: right; margin-top: 10px" @click="singout">退出登录</el-button>
           <bread-crumb></bread-crumb>
         </el-header>
@@ -25,10 +28,18 @@ export default {
     sideBar,
     breadCrumb
   },
+  data() {
+    return {
+      collapse: false
+    }
+  },
   methods: {
     singout() {
       localStorage.removeItem('user')
       this.$router.push('/login')
+    },
+    handleSidebar() {
+      this.collapse = !this.collapse
     }
   }
 };
@@ -75,5 +86,10 @@ body > .el-container {
 
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
+}
+.collapse-btn {
+  float: left;
+  margin-right: 20px;
+  margin-top: 8px;
 }
 </style>

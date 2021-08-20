@@ -8,7 +8,7 @@
         @close="handleDelTag(tag)">
       {{tag}}
     </el-tag>
-    <el-button class="button-new-tag" size="small" @click="addTag">+新增标签</el-button>
+    <el-button class="button-new-tag" size="small" @click="addTag">+新增班级</el-button>
     <el-dialog
         title="编辑标签"
         :visible.sync="dialogVisible"
@@ -31,10 +31,10 @@
 export default {
   data() {
     return {
-      dynamicTags: ['标签一', '标签二', '标签三'],
+      dynamicTags: ['班级一', '班级二', '班级三'],
       dialogVisible: false,
       checkedTag: [],
-      tags: ['标签一', '标签二', '标签三','标签四', '标签五', '标签六','标签七', '标签八', '标签九','标签十', '标签十一', '标签十二','标签十三', '标签十四', '标签十五']
+      tags: ['班级一', '班级二', '班级三','班级四', '班级五', '班级六','班级七', '班级八', '班级九','班级十', '班级十一', '班级十二','班级十三', '班级十四', '班级十五']
     };
   },
   methods: {
