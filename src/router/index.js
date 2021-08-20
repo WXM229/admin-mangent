@@ -1,9 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const Frame = () => import('../components/fram')
+const Frame = () => import('../components/fram');
+/*
+出现这两行代码的问题是为了解决：点击面包屑时出现的警告 *** NavigationDuplicated: Avoided redundant navigation to current location:***
+这一问题出现的原因是因为: 当前冗余导航,重复出发了同一个路由; 这个错误问题是因为vue-router更新之后导致的
+*/
 
-Vue.use(VueRouter)
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+};
+
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -13,7 +22,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/login.vue')
+    component: () => import('../views/login')
   },
   {
     path: '/home',
@@ -56,13 +65,30 @@ const routes = [
       {
         path: '/myPage/index',
         name: 'index',
-        component: () => import('../views/myPage/index.vue'),
+        component: () => import('../views/myPage/index'),
         meta: {
           title: '数据统计',
           icon: 'class'
         }
       }
     ]
+  },
+  {
+    path: '/transfer',
+    name: 'transfer',
+    component: Frame,
+    meta: {
+      title: '转介绍用户',
+      icon: 'class'
+    },
+    children: [
+      {
+        path: '/transfer/introduction',
+        name: 'introduction',
+        component: () => import('../views/Transfer/transfer_introduction'),
+      }
+    ],
+    redirect: '/transfer/introduction'
   }
 ]
 
