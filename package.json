@@ -23,6 +23,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "less": "^4.1.1",
     "less-loader": "^7.3.0",
+    "lint-staged": "^11.1.2",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
@@ -38,6 +39,19 @@
       "parser": "babel-eslint"
     },
     "rules": {}
+  },
+  "gitHooks" : {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
   },
   "browserslist": [
     "> 1%",
