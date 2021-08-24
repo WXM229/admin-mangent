@@ -1,24 +1,17 @@
 <template>
   <div>
-    <el-table :data="tableList" border style="width: 100%">
-      <el-table-column fixed prop="date" label="日期">
-      </el-table-column>
-      <el-table-column prop="name" label="姓名"> </el-table-column>
-      <el-table-column prop="province" label="省份">
-      </el-table-column>
-      <el-table-column prop="city" label="市区"> </el-table-column>
-      <el-table-column prop="address" label="地址">
-      </el-table-column>
-      <el-table-column prop="zip" label="邮编"> </el-table-column>
-      <el-table-column fixed="right" label="操作">
-        <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small"
-            >授权</el-button
-          >
-          <el-button type="text" size="small" @click="handleEditChange(scope.row)">编辑</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <Table
+        :columns="columns"
+        :tableData="tableData"
+        :isPagination="true"
+        :pageSizes="[10,20,50]"
+        :totalCount="4"
+        @handleCurrentChange="handlePageChange"
+        @handleCountChange="handleCountChange"
+        @buttonClick="handleButtonChange"
+    >
+
+    </Table>
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -44,6 +37,7 @@
 
 <script>
 import { TABLE_LIST } from '../../store/table'
+import Table from '../../components/tools/table'
 export default {
   data() {
     return {
@@ -97,7 +91,42 @@ export default {
       },
       value: '',
       tempChildArr: [],
-      ids: ''
+      ids: '',
+      columns: [
+        {
+          key: 'date',
+          label: '日期'
+        },
+        {
+          key: 'name',
+          label: '姓名',
+        },
+        {
+          key: 'address',
+          label: '地址'
+        },
+        {
+          key: 'province',
+          label: '省份',
+        },
+        {
+          type: 'action',
+          label: '操作',
+          buttonInfos: [
+            {
+              type: 'primary',
+              name: 'detail',
+              label: '查看'
+            },
+            {
+              type: 'primary',
+              name: 'edit',
+              label: '编辑'
+            }
+          ]
+        }
+      ],
+      tableData: []
     }
   },
   methods: {
@@ -116,13 +145,6 @@ export default {
       console.log(checkedKeys, 'checkedKeys')
       this.checkList = checkedKeys.checkedKeys
       console.log(this.checkList, '123')
-    },
-    handleEditChange(row) {
-      this.editRow = row
-      this.drawer = true
-    },
-    handleDrawClose() {
-      this.drawer = false
     },
     handleNodeClick (data) {
       this.tempChildArr = []
@@ -148,6 +170,15 @@ export default {
         return null
       }
     },
+    handlePageChange(page) {
+      console.log(page, 180)
+    },
+    handleCountChange(count) {
+      console.log(count)
+    },
+    handleButtonChange(value) {
+      console.log(value, 206)
+    }
   },
   created() {
     let tableData =  [
@@ -184,12 +215,16 @@ export default {
           zip: 200333,
         },
     ];
-  this.$store.dispatch(TABLE_LIST, tableData)
+    this.tableData = tableData;
+    this.$store.dispatch(TABLE_LIST, tableData)
   },
   computed: {
     tableList() {
       return this.$store.state.TableList.tableList
     }
+  },
+  components: {
+    Table
   }
 };
 </script>
