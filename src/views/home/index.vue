@@ -1,6 +1,7 @@
 <template>
   <div>
     <Table
+        selection
         :columns="columns"
         :tableData="tableData"
         :isPagination="true"
@@ -9,8 +10,10 @@
         @handleCurrentChange="handlePageChange"
         @handleCountChange="handleCountChange"
         @buttonClick="handleButtonChange"
+        @selectionChange="handleSelection"
+        @select="handleSelect"
+        @selectAll="handleSelectAll"
     >
-
     </Table>
     <el-dialog
       title="提示"
@@ -178,6 +181,15 @@ export default {
     },
     handleButtonChange(value) {
       console.log(value, 206)
+    },
+    handleSelection(val, page) {
+      console.log(val, page)
+    },
+    handleSelect({ selection, row }) {
+      console.log(selection, row, 189)
+    },
+    handleSelectAll(selection) {
+      console.log(selection, 193)
     }
   },
   created() {
