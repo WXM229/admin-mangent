@@ -6,7 +6,8 @@
         :tableData="tableData"
         :isPagination="true"
         :pageSizes="[10,20,50]"
-        :totalCount="4"
+        :totalCount="totalCount"
+        :defaultPageSize="count"
         @handleCurrentChange="handlePageChange"
         @handleCountChange="handleCountChange"
         @buttonClick="handleButtonChange"
@@ -32,55 +33,22 @@
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handkeSure">确 定</el-button>
+        <el-button type="primary" @click="handleSure">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { TABLE_LIST } from '../../store/table'
-import Table from '../../components/tools/table'
+import { TABLE_LIST } from '@/store/table'
+import Table from '@/components/tools/table'
+import { getList, getTreeList } from '@/api/tableList'
 export default {
   data() {
     return {
       dialogVisible: false,
       row: {},
-      data: [{
-        id: 1,
-        label: '一级 1',
-        children: [{
-          id: 4,
-          label: '二级 1-1',
-          children: [{
-            id: 9,
-            label: '三级 1-1-1'
-          }, {
-            id: 10,
-            label: '三级 1-1-2'
-          }]
-        }]
-      }, {
-        id: 2,
-        label: '一级 2',
-        children: [{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 6,
-          label: '二级 2-2'
-        }]
-      }, {
-        id: 3,
-        label: '一级 3',
-        children: [{
-          id: 7,
-          label: '二级 3-1'
-        }, {
-          id: 8,
-          label: '二级 3-2'
-        }]
-      }],
+      data: [],
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -96,6 +64,10 @@ export default {
       tempChildArr: [],
       ids: '',
       columns: [
+        {
+          key: 'id',
+          label: 'ID'
+        },
         {
           key: 'date',
           label: '日期'
@@ -118,26 +90,20 @@ export default {
           buttonInfos: [
             {
               type: 'primary',
-              name: 'detail',
-              label: '查看'
-            },
-            {
-              type: 'primary',
               name: 'edit',
               label: '编辑'
             }
           ]
         }
       ],
-      tableData: []
+      tableData: [],
+      totalCount: 0,
+      page: 1,
+      count: 10
     }
   },
   methods: {
-    handleClick(row) {
-      this.row = row;
-      this.dialogVisible = true;
-    },
-    handkeSure() {
+    handleSure() {
       this.dialogVisible = false;
     },
     handleClose() {
@@ -174,13 +140,27 @@ export default {
       }
     },
     handlePageChange(page) {
-      console.log(page, 180)
+      this.page = page;
+      this.getTableList()
     },
     handleCountChange(count) {
-      console.log(count)
+      this.count = count;
+      this.getTableList()
     },
     handleButtonChange(value) {
-      console.log(value, 206)
+      if (value.button === 'edit') {
+        this.dialogVisible = true
+        this.getTreeData()
+      }
+    },
+    async getTreeData() {
+      await getTreeList().then(res => {
+        if (res.code === 0) {
+          this.data = res.data
+        } else {
+          this.$message.warn(res.msg)
+        }
+      })
     },
     handleSelection(val, page) {
       console.log(val, page)
@@ -190,45 +170,21 @@ export default {
     },
     handleSelectAll(selection) {
       console.log(selection, 193)
+    },
+    async getTableList() {
+      await getList({page: this.page, count: this.count}).then(res => {
+        if (res.code === 0) {
+          this.tableData = res.data;
+          this.totalCount = res.totalCount;
+          this.$store.dispatch(TABLE_LIST, res.data)
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
     }
   },
   created() {
-    let tableData =  [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1517 弄",
-          zip: 200333,
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1519 弄",
-          zip: 200333,
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1516 弄",
-          zip: 200333,
-        },
-    ];
-    this.tableData = tableData;
-    this.$store.dispatch(TABLE_LIST, tableData)
+    this.getTableList()
   },
   computed: {
     tableList() {

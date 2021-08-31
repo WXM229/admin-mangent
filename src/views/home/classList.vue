@@ -1,12 +1,12 @@
 <template>
   <div class="page">
     <el-tag
-        :key="tag"
+        :key="tag.tagId"
         v-for="tag in dynamicTags"
         closable
         :disable-transitions="false"
-        @close="handleDelTag(tag)">
-      {{tag}}
+        @close="handleDelTag(tag.tagId)">
+      {{tag.tagName}}
     </el-tag>
     <el-button class="button-new-tag" size="small" @click="addTag">+新增班级</el-button>
     <el-dialog
@@ -15,8 +15,8 @@
         width="30%"
         :before-close="handleClose">
       <span>
-        <el-checkbox-group v-model="checkedTag">
-          <el-checkbox class="checkbox" v-for="item in tags" :label="item" :key="item">{{item}}</el-checkbox>
+        <el-checkbox-group v-model="checkedTag" @change="checkChange">
+          <el-checkbox class="checkbox" v-for="item in tags" :label="item.tagId" :key="item.tagId">{{item.tagName}}</el-checkbox>
         </el-checkbox-group>
       </span>
       <span slot="footer" class="dialog-footer">
@@ -28,29 +28,76 @@
 </template>
 
 <script>
+import { getClassTags, addTagList, saveTag, delTag } from '@/api/tableList'
 export default {
   data() {
     return {
-      dynamicTags: ['班级一', '班级二', '班级三'],
+      dynamicTags: [],
       dialogVisible: false,
       checkedTag: [],
-      tags: ['班级一', '班级二', '班级三','班级四', '班级五', '班级六','班级七', '班级八', '班级九','班级十', '班级十一', '班级十二','班级十三', '班级十四', '班级十五']
+      tags: []
     };
   },
+  created() {
+    this.getTagList();
+    this.getAddTagList();
+  },
   methods: {
+    async getTagList() {
+      await getClassTags().then(res => {
+        if (res.code === 0) {
+          this.dynamicTags = res.data;
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    async getAddTagList() {
+      await addTagList().then(res => {
+        if (res && res.code === 0) {
+          this.tags = res.data
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
     handleDelTag(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+      delTag({ tagId: tag }).then(res => {
+        if (res.code === 0) {
+          this.getTagList()
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
     },
     addTag() {
       this.dialogVisible = true;
-      this.checkedTag = JSON.parse(JSON.stringify(this.dynamicTags))
+      for (let i in this.dynamicTags) {
+        for (let k in this.tags) {
+          if (this.dynamicTags[i].tagId === this.tags[k].tagId) {
+            this.checkedTag.push(this.dynamicTags[i].tagId)
+          }
+        }
+      }
     },
     handleClose() {
       this.dialogVisible = false
     },
-    saveTag() {
+    checkChange(value) {
+      this.checkedTag = [...new Set(value)]
+    },
+    async saveTag() {
+      let ary = [];
+      ary = this.checkedTag;
       this.dialogVisible = false;
-      this.dynamicTags = JSON.parse(JSON.stringify(this.checkedTag))
+      await saveTag({checkTag: ary}).then(res => {
+        if (res.code === 0) {
+          this.$message.success(res.msg);
+          this.getTagList();
+        } else {
+          this.$message.error('添加失败')
+        }
+      })
     }
   }
 };
