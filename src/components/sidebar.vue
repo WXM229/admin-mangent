@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import routerList from './data/routerList';
+import { sideList } from '@/api/sideBar'
 export default {
   data() {
     return {
@@ -59,7 +59,13 @@ export default {
   },
   props: ['collapse'],
   created() {
-    this.routerList = routerList.router_list;
+    sideList().then(res => {
+      if (res.code === 0) {
+        this.routerList = res.data
+      } else {
+        this.$message.error(res.msg)
+      }
+    })
   },
   methods: {
     handleOpen(key, keyPath) {
