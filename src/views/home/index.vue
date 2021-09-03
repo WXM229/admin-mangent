@@ -1,21 +1,24 @@
 <template>
   <div>
-    <Table
-        selection
-        :columns="columns"
-        :tableData="tableData"
-        :isPagination="true"
-        :pageSizes="[10,20,50]"
-        :totalCount="totalCount"
-        :defaultPageSize="count"
-        @handleCurrentChange="handlePageChange"
-        @handleCountChange="handleCountChange"
-        @buttonClick="handleButtonChange"
-        @selectionChange="handleSelection"
-        @select="handleSelect"
-        @selectAll="handleSelectAll"
-    >
-    </Table>
+    <el-card>
+      <el-button class="setBtn" type="primary" size="small" @click="setChange">设置列</el-button>
+      <Table
+          selection
+          :columns="columns"
+          :tableData="tableData"
+          :isPagination="true"
+          :pageSizes="[10,20,50]"
+          :totalCount="totalCount"
+          :defaultPageSize="count"
+          @handleCurrentChange="handlePageChange"
+          @handleCountChange="handleCountChange"
+          @buttonClick="handleButtonChange"
+          @selectionChange="handleSelection"
+          @select="handleSelect"
+          @selectAll="handleSelectAll"
+      >
+      </Table>
+    </el-card>
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -36,12 +39,27 @@
         <el-button type="primary" @click="handleSure">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+        title="提示"
+        :visible.sync="setFlag"
+        width="40%"
+        :before-close="handleClose"
+    >
+      <span>
+       <draggableColumn :columns="columns" @columnChange="columnChange"></draggableColumn>
+      </span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handleClose">取 消</el-button>
+        <el-button type="primary" @click="handleSave">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { TABLE_LIST } from '@/store/table'
 import Table from '@/components/tools/table'
+import draggableColumn from "@/components/tools/draggableColumn";
 import { getList, getTreeList } from '@/api/tableList'
 export default {
   data() {
@@ -99,7 +117,9 @@ export default {
       tableData: [],
       totalCount: 0,
       page: 1,
-      count: 10
+      count: 10,
+      setFlag: false,
+      tempColums: []
     }
   },
   methods: {
@@ -108,6 +128,7 @@ export default {
     },
     handleClose() {
       this.dialogVisible = false;
+      this.setFlag = false;
     },
     handleCheck(checkedNodes,checkedKeys) {
       console.log(checkedNodes)
@@ -181,6 +202,16 @@ export default {
           this.$message.error(res.msg)
         }
       })
+    },
+    setChange() {
+      this.setFlag = true
+    },
+    columnChange(list) {
+      this.tempColums = list;
+    },
+    handleSave() {
+      this.columns = JSON.parse(JSON.stringify(this.tempColums));
+      this.setFlag = false
     }
   },
   created() {
@@ -192,10 +223,15 @@ export default {
     }
   },
   components: {
-    Table
+    Table,
+    draggableColumn
   }
 };
 </script>
 
 <style lang="less" scoped>
+  .setBtn {
+    float: right;
+    margin-bottom: 10px;
+  }
 </style>

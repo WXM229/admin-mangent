@@ -1,94 +1,92 @@
 <template>
   <div class="table">
-    <el-card>
-      <el-table
-        :data="tableData"
-        v-loading="loading"
-        border
-        style="width: 100%"
-        @selection-change="handleSelectionChange"
-        @select="handleSelect"
-        @select-all="handleSelectAll"
-        @cell-click="handleCellClick"
-        @sort-change="handleSortChange"
+    <el-table
+      :data="tableData"
+      v-loading="loading"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+      @select="handleSelect"
+      @select-all="handleSelectAll"
+      @cell-click="handleCellClick"
+      @sort-change="handleSortChange"
+    >
+      <el-table-column
+        v-if="selection"
+        type="selection"
+        align="center"
+        width="55"
+        :selectable="selectable"
       >
-        <el-table-column
-          v-if="selection"
-          type="selection"
-          align="center"
-          width="55"
-          :selectable="selectable"
-        >
-        </el-table-column>
-        <el-table-column
-          v-for="(item, index) in columns"
-          :key="index"
-          :fixed="item.fixed"
-          :sortable="item.sortable"
-          :prop="item.key"
-          :label="item.label"
-          :width="item.width"
-          :align="item.align || 'center'"
-          :show-overflow-tooltip="item.showOverflowTooltip"
-        >
-          <template slot-scope="scope">
-            <div v-if="item.type === 'action'">
-              <el-button
-                  v-for="button in item.buttonInfos"
-                  size="mini"
-                  :type="button.type"
-                  :key="button.name"
-                  :style="button.innerStyle"
-                  :disabled="scope.row[item.disabled] || button.disabled"
-                  @click="handleButtonClick(button.name, scope.row, scope.$index)"
-              >
-                {{ button.label }}
-              </el-button>
-            </div>
-            <div v-else-if="item.type === 'render'">
-              <myRender :row="scope.row" :render="item.render"></myRender>
-            </div>
-            <div v-else-if="item.type === 'select'">
-              <el-select v-model="scope.row[item.key]" placeholder="请选择" clearable @click="selectChange(scope, scope.row[item.key])">
-                <el-option
-                    v-for="item in selectData"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </div>
-            <div v-else-if="item.type === 'input'">
-              <el-input
-                v-model="scope.row[item.key]"
-                :readonly="item.readonly"
-                :type="item.inputType ? item.inputType : 'text'"
-                @change="inputHandler($event, scope.row, item.key, scope.$index)"
-                @keyup.native="keyupLimit($event, scope.row, item.key, scope.$index)"
-                :value="scope.row[item.key]"
-                :disabled="scope.row[item.disabled]"
-                :min="item.min"
-                :max="item.max"
-                :maxlength="item.maxlength">
-              </el-input>
-            </div>
-            <span v-else>{{ scope.row[item.key] }}</span>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="pagination" v-if="isPagination">
-        <el-pagination
-            background
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-            :page-sizes="pageSizes"
-            :page-size="pageSize"
-            layout="total, sizes, prev, pager, next"
-            :total="totalCount">
-        </el-pagination>
-      </div>
-    </el-card>
+      </el-table-column>
+      <el-table-column
+        v-for="(item, index) in columns"
+        :key="index"
+        :fixed="item.fixed"
+        :sortable="item.sortable"
+        :prop="item.key"
+        :label="item.label"
+        :width="item.width"
+        :align="item.align || 'center'"
+        :show-overflow-tooltip="item.showOverflowTooltip"
+      >
+        <template slot-scope="scope">
+          <div v-if="item.type === 'action'">
+            <el-button
+                v-for="button in item.buttonInfos"
+                size="mini"
+                :type="button.type"
+                :key="button.name"
+                :style="button.innerStyle"
+                :disabled="scope.row[item.disabled] || button.disabled"
+                @click="handleButtonClick(button.name, scope.row, scope.$index)"
+            >
+              {{ button.label }}
+            </el-button>
+          </div>
+          <div v-else-if="item.type === 'render'">
+            <myRender :row="scope.row" :render="item.render"></myRender>
+          </div>
+          <div v-else-if="item.type === 'select'">
+            <el-select v-model="scope.row[item.key]" placeholder="请选择" clearable @click="selectChange(scope, scope.row[item.key])">
+              <el-option
+                  v-for="item in selectData"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+          <div v-else-if="item.type === 'input'">
+            <el-input
+              v-model="scope.row[item.key]"
+              :readonly="item.readonly"
+              :type="item.inputType ? item.inputType : 'text'"
+              @change="inputHandler($event, scope.row, item.key, scope.$index)"
+              @keyup.native="keyupLimit($event, scope.row, item.key, scope.$index)"
+              :value="scope.row[item.key]"
+              :disabled="scope.row[item.disabled]"
+              :min="item.min"
+              :max="item.max"
+              :maxlength="item.maxlength">
+            </el-input>
+          </div>
+          <span v-else>{{ scope.row[item.key] }}</span>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div class="pagination" v-if="isPagination">
+      <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-sizes="pageSizes"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next"
+          :total="totalCount">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
