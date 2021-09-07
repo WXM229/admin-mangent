@@ -15,14 +15,14 @@
         width="30%"
         :before-close="handleClose">
       <span>
-        <el-checkbox-group v-model="checkedTag" @change="checkChange">
+        <el-checkbox-group v-model="checkedTag">
           <el-checkbox class="checkbox" v-for="item in tags" :label="item.tagId" :key="item.tagId">{{item.tagName}}</el-checkbox>
         </el-checkbox-group>
       </span>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false" size="small">取消</el-button>
-    <el-button type="primary" @click="saveTag" size="small">保存</el-button>
-  </span>
+        <el-button @click="dialogVisible = false" size="small">取消</el-button>
+        <el-button type="primary" @click="saveTag" size="small">保存</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -72,19 +72,18 @@ export default {
     },
     addTag() {
       this.dialogVisible = true;
+      const tempAry = [];
       for (let i in this.dynamicTags) {
         for (let k in this.tags) {
           if (this.dynamicTags[i].tagId === this.tags[k].tagId) {
-            this.checkedTag.push(this.dynamicTags[i].tagId)
+            tempAry.push(this.dynamicTags[i].tagId)
           }
         }
       }
+      this.checkedTag = JSON.parse(JSON.stringify(tempAry))
     },
     handleClose() {
       this.dialogVisible = false
-    },
-    checkChange(value) {
-      this.checkedTag = [...new Set(value)]
     },
     async saveTag() {
       let ary = [];
