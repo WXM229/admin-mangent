@@ -46,7 +46,9 @@
         :before-close="handleClose"
     >
       <span>
-       <draggableColumn :columns="columns" @columnChange="columnChange"></draggableColumn>
+        <keep-alive>
+          <draggableColumn :columns="columns" @columnChange="columnChange"></draggableColumn>
+        </keep-alive>
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>

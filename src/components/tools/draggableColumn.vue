@@ -47,8 +47,16 @@ export default {
     }
   },
   created() {
-    this.usedList = JSON.parse(JSON.stringify(this.columns));
-    this.usedList.push(this.columnsAction)
+    const tempAry = [];
+    if (this.columns && this.columns.length > 0) {
+      this.columns.map((item) => {
+        // eslint-disable-next-line no-prototype-builtins
+        if (item.hasOwnProperty('key')) {
+          tempAry.push(item)
+        }
+      })
+    }
+    this.usedList = JSON.parse(JSON.stringify(tempAry));
   },
   watch: {
     usedList(val) {
