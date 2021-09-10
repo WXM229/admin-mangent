@@ -63,6 +63,7 @@ import { TABLE_LIST } from '@/store/table'
 import Table from '@/components/tools/table'
 import draggableColumn from "@/components/tools/draggableColumn";
 import { getList, getTreeList } from '@/api/tableList'
+import sensors from 'sa-sdk-javascript';
 export default {
   data() {
     return {
@@ -173,6 +174,9 @@ export default {
     handleButtonChange(value) {
       if (value.button === 'edit') {
         this.dialogVisible = true
+        sensors.track('$WebClick',{
+          context: '编辑'
+        })
         this.getTreeData()
       }
     },
@@ -214,10 +218,33 @@ export default {
     handleSave() {
       this.columns = JSON.parse(JSON.stringify(this.tempColums));
       this.setFlag = false
+    },
+    initSensors() {
+      sensors.init({
+        server_url: '数据接收地址',
+        is_track_single_page:true, // 单页面配置，默认开启，若页面中有锚点设计，需要将该配置删除，否则触发锚点会多触发 $pageview 事件
+        use_client_time:true,
+        send_type:'beacon',
+        heatmap: {
+          clickmap:'default', // 是否开启点击图，default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭。
+          scroll_notice_map:'not_collect' // 是否开启触达图，not_collect 表示关闭，不会自动采集 $WebStay 事件，可以设置 'default' 表示开启。
+        },
+        show_log: true, // show_log表示开启log日志 true为开启, false为关闭
+      });
+      sensors.registerPage({
+        current_url: location.href,
+        referrer: document.referrer,
+        platform: 'web'
+      });
+      sensors.quick('autoTrack') // 数据埋点 全局埋点属性要在quick前面执行
     }
   },
   created() {
-    this.getTableList()
+    this.getTableList();
+    this.initSensors()
+  },
+  destroyed(){
+    sensors.track('WebClick')
   },
   computed: {
     tableList() {
