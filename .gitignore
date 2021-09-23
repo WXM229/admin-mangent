@@ -2,10 +2,15 @@
 node_modules
 /dist
 .history
+.gitignore
 
 # local env files
 .env.local
 .env.*.local
+.env.dev
+.env.*.dev
+.env.prod
+.env.*.prod
 
 # Log files
 npm-debug.log*
