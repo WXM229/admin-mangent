@@ -24,6 +24,15 @@
         <el-button type="primary" @click="saveTag" size="small">保存</el-button>
       </span>
     </el-dialog>
+    <el-popover
+      id="popover"
+      placement="top-start"
+      title="标题"
+      width="200"
+      trigger="hover"
+      content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+      <el-button size="small" style="margin-left: 10px" type="primary" slot="reference">hover 激活</el-button>
+  </el-popover>
   </div>
 </template>
 
@@ -98,6 +107,15 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    let fatherDom = document.getElementById('popover')
+    let tempDom = document.getElementById(fatherDom.children[0].id)
+    let small = document.createElement('span')
+    small.innerHTML = '我是小字'
+    small.style.fontSize = '10px'
+    small.style.marginLeft = '5px'
+    tempDom.children[0].appendChild(small)
   }
 };
 </script>

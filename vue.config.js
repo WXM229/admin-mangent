@@ -15,6 +15,7 @@ module.exports = {
       }
     }
   },
+  lintOnSave: false,
   chainWebpack: config => {
     config.output.filename(`js/[name].${Version}.js`).end();
     config.output.chunkFilename(`js/[id].${Version}.js`).end();
