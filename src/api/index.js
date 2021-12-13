@@ -9,6 +9,8 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
+    let token = localStorage.getItem('user') || ''
+    config.headers['token'] = token
     return config
   },
   error => {
@@ -21,6 +23,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data;
+    console.log(res, 26)
     if (res.code !== 0) {
       Message({
         message: res || 'Error',
