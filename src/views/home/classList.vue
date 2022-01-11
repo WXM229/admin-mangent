@@ -34,13 +34,13 @@
       <el-button size="small" style="margin-left: 10px" type="primary" slot="reference">hover 激活</el-button>
     </el-popover>
     <div style="margin-top: 20px">
-      <draggable v-model="arr2" group="site" animation="300" dragClass="dragClass" ghostClass="ghostClass" chosenClass="chosenClass" @start="onStart" @end="onEnd">
+      <draggable v-model="dragList" group="site" animation="300" dragClass="dragClass" ghostClass="ghostClass" chosenClass="chosenClass" @start="onStart" @end="onEnd">
         <transition-group>
           <el-card style="margin-top: 10px" class="item" v-for="item in dragList" :key="item.typeId">
             <div slot="header" class="clearfix">
               <span>{{item.type}}</span>
             </div>
-            <draggable v-model="item.data" group="site" animation="300" dragClass="dragClass"  ghostClass="ghostClass" chosenClass="chosenClass" @start="sonStart" @end="sonEnd">
+            <draggable v-model="item.data" :group="item.name" animation="300" dragClass="dragClass"  ghostClass="ghostClass" chosenClass="chosenClass" @start="sonStart" @end="sonEnd">
               <transition-group>
                 <div class="item" v-for="(sonItem) in item.data" :key="sonItem.name + sonItem.id">
                   <el-input size="small" v-model="sonItem.name" placeholder=""></el-input>
