@@ -1,5 +1,48 @@
-.formItemStyle(@margin, @padding){
-  width: 200px;
+/*
+  常规form使用方法:
+    1. 定义一个根标签 class为 'form_search_group';
+    2. 根据el-form-item label属性值的长度添加相应的class;
+    3. 为保持页面排版整洁, 固定字段宽度，添加class为 'val' 即可;
+
+      例如: 所在城市 label 字段为长度是4 添加class为label_4
+      <div class='form_search_group'>
+        <div class= 'form_content'>
+          <el-form-item label="所在城市:" class="label_4">
+            <el-input class="val" clearable v-model="form.city" placeholder="请输入所在城市"></el-input>
+          </el-form-item>
+        </div>
+      </div>
+
+   数字范围使用方法:
+    1. 定义一个根标签 class为 'form_search_range';
+    2. 字段可根据字段长度添加相应的class;
+
+      例如： 本cc跟进次数 字段长度是7 添加class为num_label_7
+       <div class="form_search_range">
+        <div class="form_search_range_item">
+          <span class="num_label">本cc跟进次数:</span>
+          <el-input
+              v-model="form.num_input[0]"
+              size="small"
+              :controls="false"
+              :class="'num_label_7'"
+              placeholder="全部">
+          </el-input>
+        </div>
+        <span style="color: #C0C4CC;">~</span>
+        <div class="form_search_range_item">
+          <span class="num_label">本cc跟进次数:</span>
+          <el-input
+              v-model="form.num_input[1]"
+              size="small"
+              :controls="false"
+              :class="'num_label_7'"
+              placeholder="全部">
+          </el-input>
+        </div>
+      </div>
+*/
+.formItemStyle(@margin, @padding, @selectPadding){
   .el-form-item__label {
     min-width: 80px;
     position: absolute;
@@ -12,33 +55,141 @@
     position: relative;
     .el-input__inner {
       padding-left: @padding;
+      font-size: 12px;
+    }
+    .el-range-input {
+      font-size: 12px;
+    }
+    .el-select {
+      .el-select__tags {
+        padding-left: @selectPadding;
+      }
     }
   }
 }
-.group_search {
+.formValStyle {
+  width: 260px;
+  .el-range__icon {
+    display: none;
+  }
+  .el-range-input {
+    width: 65px;
+    overflow: hidden;
+  }
+}
+
+.form_search_group {
   display: flex;
-  .group_title {
+  .form_title {
     vertical-align: middle;
     font-size: 14px;
     margin-right: 15px;
-    margin-top: 5px;
+    margin-top: 10px;
   }
-  .group_content {
+  .form_content {
     flex: 1;
-    .label_4 {
-      .formItemStyle(-10px, 65px);
+    .el-form-item {
+      display: inline-block;
+      margin: 5px 9px 5px;
     }
     .label_2 {
-      .formItemStyle(-35px, 40px);
+      .formItemStyle(-33px, 40px, 35px);
+      .val {
+        .formValStyle();
+      }
     }
     .label_3 {
-      .formItemStyle(-21px, 55px);
+      .formItemStyle(-21px, 55px, 50px);
+      .val {
+        .formValStyle();
+      }
+    }
+    .label_4 {
+      .formItemStyle(-10px, 65px, 58px);
+      .val {
+        .formValStyle();
+      }
     }
     .label_5 {
-      .formItemStyle(5px, 77px);
+      .formItemStyle(1px, 77px, 75px);
+      .val {
+        .formValStyle();
+      }
     }
     .label_6 {
-      .formItemStyle(5px, 85px);
+      .formItemStyle(5px, 85px, 80px);
+      .val {
+        .formValStyle()
+      }
+    }
+    .label_7 {
+      .formItemStyle(5px, 100px, 95px);
+      .val {
+        .formValStyle()
+      }
+    }
+    .form_search_range {
+      display: inline-block;
+      margin: 5px 9px 0;
+      .form_search_range_item {
+        display: inline-block;
+        width: 125px;
+      }
+      .num_label {
+        display: block;
+        position: absolute;
+        padding-left: 5px;
+        z-index: 1;
+        font-size: 12px;
+        color: #606266;
+        margin-top: 7px;
+      }
+      .num_label_2 {
+        .el-cascader__label,
+        .el-input__inner {
+          font-size: 12px;
+          padding-left: 39px;
+        }
+      }
+      .num_label_3 {
+        .el-cascader__label,
+        .el-input__inner {
+          font-size: 12px;
+          padding-left: 50px;
+        }
+      }
+      .num_label_4 {
+        .el-cascader__label,
+        .el-input__inner {
+          font-size: 12px;
+          padding-left: 60px;
+        }
+      }
+      .num_label_5 {
+        .el-cascader__label,
+        .el-input__inner {
+          font-size: 12px;
+          padding-left: 72px;
+        }
+      }
+      .num_label_6 {
+        .el-input__inner {
+          font-size: 12px;
+          padding-left: 85px;
+          padding-right: 2px;
+        }
+      }
+      .num_label_7 {
+        .el-cascader__label,
+        .el-input__inner {
+          font-size: 12px;
+          padding-left: 85px;
+          padding-right: 2px;
+        }
+      }
     }
   }
+}
+.form_search_group:first-child {
+  margin-top: 10px;
 }
