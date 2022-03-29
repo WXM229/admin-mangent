@@ -66,8 +66,7 @@ export default {
     return {
       form: {},
       options: {
-        student_status: [
-          {
+        student_status: [{
             value: '选项1',
             label: '黄金糕'
           }, {
@@ -82,10 +81,9 @@ export default {
           }, {
             value: '选项5',
             label: '北京烤鸭'
-          }
-        ],
+          }],
         intention: [
-          {
+            {
             value: '1',
             label: 'S'
           }, {
@@ -98,7 +96,7 @@ export default {
             value: '4',
             label: 'C'
           },
-        ]
+          ]
       }
     };
   },

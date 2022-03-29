@@ -22,7 +22,7 @@
               </div>
               <draggable
                 :list="item.data"
-                :group="item.title"
+                group="site"
                 animation="300"
                 dragClass="dragClass"
                 ghostClass="ghostClass"
