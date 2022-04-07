@@ -240,6 +240,7 @@ export default {
     }
   },
   created() {
+    console.log(process.env, 243)
     this.getTableList();
     this.initSensors()
   },
