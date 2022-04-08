@@ -2,7 +2,7 @@ const Version  = new Date().getTime();
 module.exports = {
   devServer: {
     port: 8000,
-    host: 'localhost',
+    // host: 'localhost',
     open: true,
     proxy: {
       "/api": {

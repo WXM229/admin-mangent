@@ -12,6 +12,7 @@
       >
       <template v-for="(item, index) in routerList">
         <el-submenu
+          class="submenu"
           v-if="item.children"
           :key="index"
           :index="item.url"
@@ -27,7 +28,7 @@
               :to="{ path: subItem.url }"
               :key="subItem.url"
             >
-              <el-menu-item :index="subItem.url">
+              <el-menu-item :index="subItem.url" style="padding-left: 55px">
                 {{ subItem.name }}
               </el-menu-item>
             </router-link>
@@ -35,7 +36,7 @@
         </el-submenu>
         <router-link
             v-else
-            class="routerLink"
+            class="routerLink submenu"
             :to="{ path: item.url }"
             :key="index">
           <el-menu-item  :index="item.url">
@@ -78,13 +79,16 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 .aside {
   height: 100%;
   overflow-y: scroll;
 }
 .el-menu-vertical-demo {
    height: 100%;
+  .submenu {
+    text-align: left;
+  }
 }
 .routerLink {
   text-decoration: none;
