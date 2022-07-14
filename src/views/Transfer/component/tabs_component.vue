@@ -1,19 +1,12 @@
 <template>
   <div>
-    <div v-if="activeName === 'first'">用户管理</div>
-    <div v-else>配置管理</div>
+    {{count}}
   </div>
 </template>
+<script setup>
+import { ref} from 'vue';
 
-<script>
-export default {
-  data() {
-    return {
-
-    }
-  },
-  props: ['activeName']
-}
+const count = ref(123)
 </script>
 
 <style scoped>

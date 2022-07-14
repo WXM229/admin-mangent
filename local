@@ -1,0 +1,29 @@
+JS数据类型
+   栈(stack, 先进后出): Number, String, Boolean, Undefined, Null, Symbol, BigInt,
+   堆(heap, 按照优先级排序 可根据大小来规定): Object
+
+检测数据类型的方法
+    typeof: array, object, null 检测都是object，其余类型正确
+    instanceof: 其内部运行机制是判断在其原型链中能否找到该类型的原型。，只能检测引用数据类型
+    constructor: 若修改原型则不能判断类型
+    Object.prototype.toString.call: 最全面
+
+Instanceof源码:
+
+        myInstanceOf(left, right) {
+          let proto = Object.getPrototypeOf(left);
+          const prototype = right.prototype;
+          while (true) {
+            if (!proto) return false
+            if (proto === prototype) return true
+            proto = Object.getPrototypeOf(proto)
+          }
+        }
+
+
+为什么0.1 + 0.2 !== 0.3, 如何让其等于0.3
+    0.1 + 0.2 计算时会转变为二进制都是(1100)循环，二进制相加在转变为十进制是0.30000000000000004
+    1. (0.1 + 0.2).toFixed(2);
+    2. 设置一个误差范围称作"机器精度"，对于js来说这个值是2^-52，在es6中Number提供了一个EPSILON,它的值是2^-52,只要判断0.1 + 0.2 - 0.3 < Number.EPSILON, 就可以判断了
+
+
