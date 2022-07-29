@@ -1,14 +1,21 @@
 <template>
-  <div>
-    {{count}}
+  <div class="app-container">
+    <div class="count">
+      {{count}}
+    </div>
   </div>
 </template>
-<script setup>
-import { ref} from 'vue';
+<script lang="ts" setup>
+  import { ref,Ref } from 'vue';
+  let count: Ref<number> = ref(123);
 
-const count = ref(123)
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+.app-container {
+  font-size: 20px;
+  .count {
+    color: red;
+  }
+}
 </style>

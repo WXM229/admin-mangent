@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --mode development",
-    "test": "vue-cli-service serve --mode test",
+    "build": "vue-cli-service build --mode dev",
+    "lint": "eslint --fix --ext .js,.vue src",
+    "build:prod": "vue-cli-service build --mode prod",
     "pre": "vue-cli-service serve --mode pre",
     "prod": "vue-cli-service serve --mode prod",
     "serve:prod": "vue-cli-service serve --mode prod",
-    "build": "vue-cli-service build --mode dev",
-    "lint": "vue-cli-service lint",
-    "build:prod": "vue-cli-service build --mode prod"
+    "test": "vue-cli-service serve --mode test"
   },
   "dependencies": {
+    "@vue/cli": "^5.0.8",
     "@vue/composition-api": "^1.6.2",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
@@ -21,17 +22,24 @@
     "lodash": "^4.17.21",
     "sa-sdk-javascript": "^1.18.17",
     "vue": "~2.7.0",
+    "vue-class-component": "^7.2.3",
+    "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.1",
     "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@vue/cli": "^4.5.18",
-    "@vue/cli-plugin-babel": "~4.5.18",
-    "@vue/cli-plugin-eslint": "~4.5.18",
-    "@vue/cli-service": "~4.5.18",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-plugin-typescript": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "@vue/eslint-config-typescript": "^9.1.0",
+    "eslint": "^7.32.0",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-vue": "^9.0.0",
     "less": "^4.1.1",
     "less-loader": "^7.3.0",
@@ -39,7 +47,7 @@
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1",
     "ts-loader": "^9.2.5",
-    "typescript": "^4.4.3",
+    "typescript": "~4.5.5",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
@@ -49,13 +57,24 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "@vue/typescript"
     ],
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@typescript-eslint/parser"
     },
-    "rules": {}
+    "rules": {
+      "semi": [
+        "error",
+        "always"
+      ]
+    }
   },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
@@ -68,10 +87,5 @@
       "vue-cli-service lint",
       "git add"
     ]
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  }
 }
