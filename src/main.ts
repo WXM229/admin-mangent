@@ -6,6 +6,7 @@ import '../src/assets/styles/element-ui.scss'; // 用于更改element主题颜�
 // import 'element-ui/lib/theme-chalk/index.css'; // 使用element默认颜色
 import store from './store/index';
 import '../src/assets/form.less';
+import './assets/icons'
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 new Vue({

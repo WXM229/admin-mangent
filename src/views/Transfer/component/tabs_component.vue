@@ -2,6 +2,7 @@
   <div class="app-container">
     <div class="count">
       {{count}}
+      <svg-icon icon-class="first"></svg-icon>
     </div>
   </div>
 </template>

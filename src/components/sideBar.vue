@@ -19,7 +19,7 @@
         >
           <template>
             <template slot="title">
-              <i :class="item.icon"></i>
+              <svg-icon :icon-class="item.icon" class="icon"/>
               <span>{{ item.name }}</span>
             </template>
             <router-link
@@ -40,7 +40,7 @@
             :to="{ path: item.url }"
             :key="index">
           <el-menu-item  :index="item.url">
-            <i :class="item.icon"></i>
+            <svg-icon :icon-class="item.icon" class="icon"/>
             <span slot="title">{{ item.name }}</span>
           </el-menu-item>
         </router-link>
@@ -51,22 +51,22 @@
 </template>
 
 <script>
-import { sideList } from '@/api/sideBar'
+import { sideList } from '@/api/sideBar';
 export default {
   data() {
     return {
       routerList: [],
-    }
+    };
   },
   props: ['collapse'],
   created() {
     sideList().then(res => {
       if (res.code === 0) {
-        this.routerList = res.data
+        this.routerList = res.data;
       } else {
-        this.$message.error(res.msg)
+        this.$message.error(res.msg);
       }
-    })
+    });
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -76,7 +76,7 @@ export default {
       console.log(key, keyPath);
     }
   }
-}
+};
 </script>
 
 <style lang="less">
@@ -92,5 +92,9 @@ export default {
 }
 .routerLink {
   text-decoration: none;
+}
+.icon {
+  margin-left: 5px;
+  margin-right: 15px;
 }
 </style>>

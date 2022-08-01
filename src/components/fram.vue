@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import sideBar from './sidebar'
-import breadCrumb from './breadCrumb'
+import sideBar from "./sidebar";
+import breadCrumb from './breadCrumb';
 export default {
   components: {
     sideBar,
@@ -31,15 +31,15 @@ export default {
   data() {
     return {
       collapse: false
-    }
+    };
   },
   methods: {
     singout() {
-      localStorage.removeItem('user')
-      this.$router.push('/login')
+      localStorage.removeItem('user');
+      this.$router.push('/login');
     },
     handleSidebar() {
-      this.collapse = !this.collapse
+      this.collapse = !this.collapse;
     }
   }
 };
