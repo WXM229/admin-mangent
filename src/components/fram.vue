@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import sideBar from "./sidebar";
+import sideBar from "./sideBar";
 import breadCrumb from './breadCrumb';
 export default {
   components: {
